@@ -11,8 +11,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "type-check": "tsc --noEmit",
-    "prepare": "if [ \"$NODE_ENV\" != 'production' -a \"$CI\" != 'true' ]; then cd .. && husky; fi"
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@nuxt/image": "2.0.0",
@@ -29,8 +28,6 @@
     "@nuxt/hints": "1.0.0-alpha.6",
     "@nuxt/test-utils": "3.23.0",
     "eslint": "9.39.2",
-    "husky": "9.1.7",
-    "lint-staged": "16.3.2",
     "prettier": "3.8.1",
     "prettier-plugin-tailwindcss": "0.7.2",
     "tailwindcss": "4.1.18",

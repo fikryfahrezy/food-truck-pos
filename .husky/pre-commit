@@ -1,2 +1,0 @@
-bun run --cwd front-end type-check
-bun exec --cwd front-end lint-staged
