@@ -10,5 +10,8 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/ui',
     '@nuxt/test-utils'
-  ]
+  ],
+  nitro: {
+    preset: 'bun',
+  }
 })

@@ -1,26 +1,39 @@
 {
-  "name": "my-nuxt-app",
+  "name": "front-end",
   "type": "module",
   "private": true,
+  "engines": {
+    "bun": ">=1.2"
+  },
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "type-check": "tsc --noEmit",
+    "prepare": "if [ \"$NODE_ENV\" != 'production' -a \"$CI\" != 'true' ]; then cd .. && husky; fi"
   },
   "dependencies": {
+    "@nuxt/image": "2.0.0",
+    "@nuxt/ui": "4.4.0",
+    "clsx": "2.1.1",
+    "nuxt": "4.3.0",
+    "tailwind-merge": "3.5.0",
+    "vue": "3.5.27",
+    "vue-router": "4.6.4"
+  },
+  "devDependencies": {
     "@nuxt/a11y": "1.0.0-alpha.1",
     "@nuxt/eslint": "1.13.0",
     "@nuxt/hints": "1.0.0-alpha.6",
-    "@nuxt/image": "2.0.0",
     "@nuxt/test-utils": "3.23.0",
-    "@nuxt/ui": "4.4.0",
     "eslint": "9.39.2",
-    "nuxt": "4.3.0",
+    "husky": "9.1.7",
+    "lint-staged": "16.3.2",
+    "prettier": "3.8.1",
+    "prettier-plugin-tailwindcss": "0.7.2",
     "tailwindcss": "4.1.18",
-    "typescript": "5.9.3",
-    "vue": "3.5.27",
-    "vue-router": "4.6.4"
+    "typescript": "5.9.3"
   }
 }
