@@ -19,6 +19,12 @@ RUN cd /temp/prod && bun install --frozen-lockfile --production
 # copy node_modules from temp directory
 # then copy all (non-ignored) project files into the image
 FROM base AS prerelease
+
+# Install ca-certificates and curl for health checks
+RUN apt-get update && \
+    apt-get install -y ca-certificates curl tzdata && \
+    rm -rf /var/lib/apt/lists/*
+
 COPY --from=install /temp/dev/node_modules node_modules
 COPY . .
 
