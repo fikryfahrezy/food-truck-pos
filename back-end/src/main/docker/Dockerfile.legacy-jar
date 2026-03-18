@@ -92,7 +92,7 @@ COPY src /code/src
 RUN ./mvnw package -DskipTests -Dquarkus.package.jar.type=legacy-jar
 
 ## Stage 2 : create the docker final image
-FROM registry.access.redhat.com/ubi9/openjdk-25:1.23
+FROM registry.access.redhat.com/ubi9/openjdk-25:1.24-2.1773186581
 
 ENV LANGUAGE='en_US:en'
 
