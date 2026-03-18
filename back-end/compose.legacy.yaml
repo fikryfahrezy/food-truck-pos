@@ -2,7 +2,7 @@ services:
   back-end:
     build:
       context: .
-      dockerfile: ./Dockerfile.legacy-jar
+      dockerfile: ./src/main/docker/Dockerfile.legacy-jar
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8080"]

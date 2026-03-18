@@ -2,7 +2,7 @@ services:
   back-end:
     build:
       context: .
-      dockerfile: ./Dockerfile.native
+      dockerfile: ./src/main/docker/Dockerfile.native
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8080"]
