@@ -23,7 +23,7 @@
 ## https://quarkus.io/guides/building-native-image#multistage-docker
 ## Stage 1 : build with maven builder image with native capabilities
 FROM quay.io/quarkus/ubi9-quarkus-mandrel-builder-image:jdk-25.0.2 AS build
-COPY --chown=quarkus:quarkus --chmod=0755 mvnw /code/mvnw
+COPY --chown=quarkus:quarkus mvnw /code/mvnw
 COPY --chown=quarkus:quarkus .mvn /code/.mvn
 COPY --chown=quarkus:quarkus pom.xml /code/
 USER quarkus
@@ -32,10 +32,13 @@ RUN ./mvnw -B org.apache.maven.plugins:maven-dependency-plugin:3.8.1:go-offline
 COPY src /code/src
 RUN ./mvnw package -Dnative
 
-## Stage 2 : create the docker final image
-FROM quay.io/quarkus/ubi9-quarkus-micro-image:2.0
+## Stage 2 : copy curl from ubi-minimal (curl-minimal is pre-installed)
+FROM registry.access.redhat.com/ubi9/ubi-minimal:9.7 AS curl-provider
 
-RUN microdnf install -y curl && microdnf clean all
+## Stage 3 : create the docker final image
+FROM quay.io/quarkus/ubi9-quarkus-micro-image:2.0
+COPY --from=curl-provider /usr/bin/curl /usr/bin/curl
+COPY --from=curl-provider /usr/lib64 /usr/lib64
 
 WORKDIR /work/
 COPY --from=build /code/target/*-runner /work/application
