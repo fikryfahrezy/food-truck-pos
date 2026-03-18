@@ -4,3 +4,8 @@ services:
       context: .
       dockerfile: ./src/main/docker/Dockerfile.jvm
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080"]
+      interval: 5s
+      timeout: 5s
+      retries: 5

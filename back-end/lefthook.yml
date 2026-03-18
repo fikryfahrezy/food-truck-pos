@@ -1,0 +1,12 @@
+pre-commit:
+  parallel: true
+  jobs:
+    - root: "back-end/"
+      glob:
+        - "**/*.java"
+      group:
+        piped: true
+        jobs:
+          - run: ./mvnw checkstyle:check -q
+          - run: ./mvnw spotless:apply
+            stage_fixed: true

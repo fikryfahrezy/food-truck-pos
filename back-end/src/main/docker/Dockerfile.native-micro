@@ -46,4 +46,7 @@ RUN chmod 775 /work /work/application \
 EXPOSE 8080
 USER 1001
 
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8080
+
 CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
