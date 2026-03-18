@@ -34,6 +34,9 @@ RUN ./mvnw package -Dnative
 
 ## Stage 2 : create the docker final image
 FROM quay.io/quarkus/ubi9-quarkus-micro-image:2.0
+
+RUN microdnf install -y curl && microdnf clean all
+
 WORKDIR /work/
 COPY --from=build /code/target/*-runner /work/application
 
