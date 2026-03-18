@@ -80,16 +80,28 @@
 # You can find more information about the UBI base runtime images and their configuration here:
 # https://rh-openjdk.github.io/redhat-openjdk-containers/
 ###
+## Stage 1 : build with maven builder image
+FROM quay.io/quarkus/ubi9-quarkus-mandrel-builder-image:jdk-25.0.2 AS build
+COPY --chown=quarkus:quarkus --chmod=0755 mvnw /code/mvnw
+COPY --chown=quarkus:quarkus .mvn /code/.mvn
+COPY --chown=quarkus:quarkus pom.xml /code/
+USER quarkus
+WORKDIR /code
+RUN ./mvnw -B org.apache.maven.plugins:maven-dependency-plugin:3.8.1:go-offline
+COPY src /code/src
+RUN ./mvnw package -DskipTests
+
+## Stage 2 : create the docker final image
 FROM registry.access.redhat.com/ubi9/openjdk-25:1.23
 
 ENV LANGUAGE='en_US:en'
 
 
 # We make four distinct layers so if there are application changes the library layers can be re-used
-COPY --chown=185 target/quarkus-app/lib/ /deployments/lib/
-COPY --chown=185 target/quarkus-app/*.jar /deployments/
-COPY --chown=185 target/quarkus-app/app/ /deployments/app/
-COPY --chown=185 target/quarkus-app/quarkus/ /deployments/quarkus/
+COPY --chown=185 --from=build /code/target/quarkus-app/lib/ /deployments/lib/
+COPY --chown=185 --from=build /code/target/quarkus-app/*.jar /deployments/
+COPY --chown=185 --from=build /code/target/quarkus-app/app/ /deployments/app/
+COPY --chown=185 --from=build /code/target/quarkus-app/quarkus/ /deployments/quarkus/
 
 EXPOSE 8080
 USER 185

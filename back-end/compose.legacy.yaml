@@ -1,0 +1,6 @@
+services:
+  back-end:
+    build:
+      context: .
+      dockerfile: ./src/main/docker/Dockerfile.legacy-jar
+    restart: unless-stopped

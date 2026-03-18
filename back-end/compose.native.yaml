@@ -1,0 +1,6 @@
+services:
+  back-end:
+    build:
+      context: .
+      dockerfile: ./src/main/docker/Dockerfile.native
+    restart: unless-stopped
