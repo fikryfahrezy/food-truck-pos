@@ -13,7 +13,10 @@
     "postinstall": "nuxt prepare",
     "type-check": "vue-tsc --build --noEmit",
     "lint": "eslint --ext .ts,.vue .",
-    "msw:init": "msw init public/"
+    "msw:init": "if [ \"$NODE_ENV\" != 'production' -a \"$CI\" != 'true' ]; then msw init public/; fi",
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:ui": "playwright test --ui"
   },
   "dependencies": {
     "@nuxt/image": "2.0.0",
@@ -32,6 +35,8 @@
     "@nuxt/eslint": "1.15.2",
     "@nuxt/hints": "1.0.2",
     "@nuxt/test-utils": "4.0.0",
+    "@playwright/test": "1.58.2",
+    "@types/node": "24.12.0",
     "eslint": "9.39.2",
     "msw": "2.12.14",
     "prettier": "3.8.1",
